@@ -5,4 +5,18 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Oracle.EntityFrameworkCore" />
+    <None Remove="Model\" />
+    <None Remove="Requests\" />
+    <None Remove="Newtonsoft.Json" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Oracle.EntityFrameworkCore" Version="5.21.4" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Model\" />
+    <Folder Include="Requests\" />
+  </ItemGroup>
 </Project>
