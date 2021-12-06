@@ -3,16 +3,22 @@ using DataTransferer.Requests;
 
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Specialized;
 using System.Net;
 using System.Linq;
+using System.Threading.Tasks;
+using DataTransferer.Quartz;
+using DataTransferer.Quartz.Jobs;
+using Quartz;
+using Quartz.Impl;
 
 namespace DataTransferer
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-            using (var db = new NisDBContext())
+            /*using (var db = new NisDBContext())
             {
                 Console.WriteLine("Is connected to db: " + db.Database.CanConnect());
 
@@ -35,9 +41,10 @@ namespace DataTransferer
 
                 // Prikaz pre commit; databazy
                 //db.SaveChanges();
-            }
-           
-            Console.WriteLine("Done!");
+            }*/
+            var jh = new JobHandler();
+            await jh.RunJobs();
+            Console.ReadKey();
         }
     }
 }
