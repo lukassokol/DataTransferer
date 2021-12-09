@@ -31,44 +31,44 @@ namespace DataTransferer.Requests
 
         public static List<AgTestsByRegion> GetAgTestsByRegions()
         {
-            var response = client.GetStringAsync("https://data.korona.gov.sk/api/ag-tests/by-region");
+            var response =  client.GetStringAsync("https://data.korona.gov.sk/api/ag-tests/by-region");
 
-            return JsonConvert.DeserializeObject<TMPAgTestsByRegionsResponse>(response.Result).page;
+            return JsonConvert.DeserializeObject<TmpAgTestsByRegionsResponse>(response.Result).Page;
         }
 
         public static List<HospitalbbedsByRegion> GetHospitalBedsByRegion()
         {
             var response = client.GetStringAsync("https://data.korona.gov.sk/api/hospital-beds/by-region");
 
-            return JsonConvert.DeserializeObject<TMPHospitalBedsByRegion>(response.Result).page;
+            return JsonConvert.DeserializeObject<TmpHospitalBedsByRegion>(response.Result).Page;
         }
 
         public static List<HospitalPatientsByRegion> GetHospitalPatientsByRegion()
         {
             var response = client.GetStringAsync("https://data.korona.gov.sk/api/hospital-patients/by-region");
 
-            return JsonConvert.DeserializeObject<TMPHospitalPatientsByRegion>(response.Result).page;
+            return JsonConvert.DeserializeObject<TmpHospitalPatientsByRegion>(response.Result).Page;
         }
     }
 
-    public class TMPAgTestsByRegionsResponse
+    public class TmpAgTestsByRegionsResponse
     {
-        public string success { get; set; }
-        public string next_offset { get; set; }
-        public List<AgTestsByRegion> page { get; set; }
+        public string Success { get; set; }
+        public string NextOffset { get; set; }
+        public List<AgTestsByRegion> Page { get; set; }
     }
 
-    public class TMPHospitalBedsByRegion
+    public class TmpHospitalBedsByRegion
     {
-        public string success { get; set; }
-        public string next_offset { get; set; }
-        public List<HospitalbbedsByRegion> page { get; set; }
+        public string Success { get; set; }
+        public string NextOffset { get; set; }
+        public List<HospitalbbedsByRegion> Page { get; set; }
     }
 
-    public class TMPHospitalPatientsByRegion
+    public class TmpHospitalPatientsByRegion
     {
-        public string success { get; set; }
-        public string next_offset { get; set; }
-        public List<HospitalPatientsByRegion> page { get; set; }
+        public string Success { get; set; }
+        public string NextOffset { get; set; }
+        public List<HospitalPatientsByRegion> Page { get; set; }
     }
 }

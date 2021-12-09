@@ -7,27 +7,46 @@ namespace DataTransferer.Quartz
 {
     public class JobHandler
     {
-
         public async Task RunJobs()
         {
-            StdSchedulerFactory factory = new StdSchedulerFactory();
-            IScheduler sched = await factory.GetScheduler();
-            await sched.Start();
+            var scheduler = await CreateScheduler();
+            await scheduler.Start();
             
-            IJobDetail ExampleJob = JobBuilder.Create<ExampleJob>()
-                .WithIdentity("ExampleJob", "group1")
-                .Build();
+            var agTestsJob = CreateJob<AgTestsJob>("AgTestsJob", "AgTestsGroup");
+            var hospitalPatientsJob = CreateJob<HospitalPatientsJob>("hospitalPatientsJob", "hospitalPatientsGroup");
+            var hospitalBedsJob = CreateJob<HospitalBedsJob>("hospitalBedsJob", "hospitalBedsJobGroup");
             
-            //Define time intervals
-            ITrigger trigger = TriggerBuilder.Create()
-                .WithIdentity("myTrigger", "group1")
-                .StartNow()
-                .WithSimpleSchedule(x => x
-                    .WithIntervalInSeconds(30)
-                    .RepeatForever())
-                .Build();
+            var agTestsTrigger = CreateTrigger("agTestsTrigger", "agTestsTriggerGroup");
+            var hospitalPatientsTrigger = CreateTrigger("hospitalPatientsTrigger", "hospitalPatientsTriggerGroup");
+            var hospitalBedsTrigger = CreateTrigger("hospitalBedsTrigger", "hospitalBedsTriggerGroup");
 
-            await sched.ScheduleJob(ExampleJob, trigger);
+            await scheduler.ScheduleJob(agTestsJob, agTestsTrigger);
+            await scheduler.ScheduleJob(hospitalPatientsJob, hospitalPatientsTrigger);
+            await scheduler.ScheduleJob(hospitalBedsJob, hospitalBedsTrigger);
+        }
+
+        private IJobDetail CreateJob<T>(string name, string group)  where T : IJob
+        {
+            return JobBuilder.Create<T>()
+                    .WithIdentity(name, group)
+                    .Build();
+        }
+
+        private ITrigger CreateTrigger(string name, string group)
+        {
+            return TriggerBuilder.Create()
+                    .WithIdentity(name, group)
+                    .StartNow()
+                    .WithSimpleSchedule(x => x
+                        .WithIntervalInSeconds(30)
+                        .RepeatForever())
+                    .Build();
+        }
+
+        private async Task<IScheduler> CreateScheduler()
+        {
+            StdSchedulerFactory factory = new StdSchedulerFactory();
+            return await factory.GetScheduler();
         }
     }
 }
