@@ -9,6 +9,11 @@ namespace DataTransferer.Service
         public void SaveDataByRegion(List<NisDBContext.HospitalPatientsByRegion> data)
         {
             Console.WriteLine("Saving HospitalPatients");
+            /*using (var context = new NisDBContext())
+            {
+                foreach (var item in data)
+                    context.Add(item);
+            }*/
         }
     }
 }
