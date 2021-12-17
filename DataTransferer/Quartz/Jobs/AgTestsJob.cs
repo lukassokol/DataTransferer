@@ -9,7 +9,7 @@ namespace DataTransferer.Quartz.Jobs
 {
     public class AgTestsJob: IJob
     {
-        private AgTestsService _agTestsService;
+        private readonly AgTestsService _agTestsService;
 
         public AgTestsJob()
         {
@@ -18,11 +18,9 @@ namespace DataTransferer.Quartz.Jobs
 
         public Task Execute(IJobExecutionContext context)
         {
-            //TODO: AgTestsByRegion
             //Get data from server
-            var data = GetRequests.GetAgTestsByRegions()
-                .TakeLast(8).ToList();
-            
+            var data = GetRequests.GetAgTestsByRegions();
+
             //Save data to the DB
             _agTestsService.SaveDataByRegion(data);
             

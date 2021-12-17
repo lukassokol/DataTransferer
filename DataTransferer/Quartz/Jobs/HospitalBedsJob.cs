@@ -8,7 +8,7 @@ namespace DataTransferer.Quartz.Jobs
 {
     public class HospitalBedsJob: IJob
     {
-        private HospitalBedsService _hospitalBedsService;
+        private readonly HospitalBedsService _hospitalBedsService;
 
         public HospitalBedsJob()
         {
@@ -17,11 +17,9 @@ namespace DataTransferer.Quartz.Jobs
 
         public Task Execute(IJobExecutionContext context)
         {
-            //TODO: HospitalBedsByRegion
             //Get data from server
-            var data = GetRequests.GetHospitalBedsByRegion()
-                .TakeLast(8).ToList();
-            
+            var data = GetRequests.GetHospitalBedsByRegion();
+
             //Save data to DB
             _hospitalBedsService.SaveDataByRegion(data);
             return Task.CompletedTask;
